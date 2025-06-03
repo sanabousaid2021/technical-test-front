@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   Card,
   CardContent,
@@ -8,11 +9,13 @@ import {
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import { useContext } from "react";
-import GlobalContext from "../../state/global-context";
-import { Product } from "../../types/types";
+
+import GlobalContext from "@/state/global-context";
+import { Product } from "@/types/types";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
+import { useWishlistActions, useWishlistState } from "@/store/wishlist-store";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,8 +38,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     position: "relative",
-    // boxShadow:
-    //   "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
   },
   thumbnail: {
     maxHeight: "170px",
@@ -77,10 +78,13 @@ type Props = {
   product: Product;
 };
 
-const ProductCard = (props: Props) => {
+const ProductCard = ({ product }: Props) => {
   const classes = useStyles();
-  const { product } = props;
+
   const context = useContext(GlobalContext);
+
+  const { updateWishlist } = useWishlistActions();
+  const { wishlistProducts } = useWishlistState();
 
   if (!context) return null;
 
@@ -93,11 +97,28 @@ const ProductCard = (props: Props) => {
     );
   };
 
+  const handleAddToWishlist = (
+    _e: React.MouseEvent<HTMLButtonElement>,
+    product: Product
+  ) => {
+    updateWishlist(product);
+  };
+
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        <IconButton size="large" className={classes.favoriteIcon}>
-          <FavoriteBorderIcon color="secondary" />
+        <IconButton
+          onClick={(e) => handleAddToWishlist(e, product)}
+          size="large"
+          className={classes.favoriteIcon}
+        >
+          {wishlistProducts.find(
+            (wishlistproduct) => wishlistproduct.id === product.id
+          ) ? (
+            <FavoriteIcon color="secondary" />
+          ) : (
+            <FavoriteBorderIcon color="secondary" />
+          )}
         </IconButton>
         <div className={classes.thumbnailContainer}>
           <CardMedia

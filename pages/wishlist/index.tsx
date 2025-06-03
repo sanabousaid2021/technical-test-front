@@ -7,10 +7,9 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import ProductsList from "@/components/boutique/ProductsList";
-
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
+import { ProductsWishlist } from "@/components/wishlist/ProductsWishlist";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: { marginBottom: theme.spacing(3) },
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Boutique = () => {
+const Wishlist = () => {
   const classes = useStyles();
 
   return (
@@ -68,11 +67,12 @@ const Boutique = () => {
           </Grid>
 
           <Grid item xs={12} md={9} className={classes.productsListContainer}>
-            <ProductsList />
+            <ProductsWishlist />
           </Grid>
         </Grid>
       </Container>
     </DefaultLayaout>
   );
 };
-export default Boutique;
+
+export default Wishlist;

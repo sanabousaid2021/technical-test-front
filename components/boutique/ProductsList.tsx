@@ -1,7 +1,8 @@
+import { useContext, useState } from "react";
 import ProductCard from "./ProductCard";
 import { Grid, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import GlobalContext from "../../state/global-context";
+
+import GlobalContext from "@/state/global-context";
 
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
@@ -223,8 +224,8 @@ const ProductList = () => {
         Products in cart : {context.cart.length}
       </Typography>
       <Grid container spacing={2}>
-        {products.map((product, index) => (
-          <Grid item xs={6} md={4} key={index}>
+        {products.map((product) => (
+          <Grid item xs={6} md={4} key={product.id}>
             <ProductCard product={product} />
           </Grid>
         ))}

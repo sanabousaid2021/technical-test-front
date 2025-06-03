@@ -13,6 +13,24 @@ declare module "@mui/material/styles" {
 const theme = createTheme({
   typography: {
     fontFamily: "Sofia Sans Condensed, sans-serif",
+    fontSize: 14,
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 700,
+    },
+    h2: {
+      fontSize: "2.25rem",
+    },
+    body1: {
+      fontSize: "1rem",
+    },
+    body2: {
+      fontSize: "0.875rem",
+    },
+    button: {
+      fontSize: "0.875rem",
+      textTransform: "none",
+    },
   },
   palette: {
     primary: {

@@ -4,15 +4,18 @@ import {
   Typography,
   IconButton,
   Container,
+  Badge,
 } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Link from "next/link";
 import Interstitial from "../Interstitial";
 import { useContext, useState } from "react";
-import GlobalContext from "../../state/global-context";
+import GlobalContext from "@/state/global-context";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
+import { useWishlistState } from "@/store/wishlist-store";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: { position: "sticky", top: 0, left: 0, right: 0, zIndex: 9999 },
@@ -34,9 +37,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Header = () => {
   const classes = useStyles();
-  const context = useContext(GlobalContext);
+  const route = useRouter();
+  const { open_interstitial, pushObject, cart } =
+    useContext(GlobalContext) ?? {};
+  const { wishlistProducts } = useWishlistState();
 
-  if (!context) return null;
+  if (!open_interstitial && !pushObject) return null;
 
   const toggleDrawer =
     (open: boolean) =>
@@ -53,8 +59,12 @@ const Header = () => {
       ) {
         return;
       }
-      context.pushObject("open_interstitial", true);
+      pushObject?.("open_interstitial", true);
     };
+
+  const gotoWishListPage = () => {
+    route.push("/wishlist");
+  };
 
   return (
     <>
@@ -70,17 +80,21 @@ const Header = () => {
                 </a>
               </Link>
               <div className={classes.Icons}>
-                <IconButton
-                  onClick={toggleDrawer(!context.open_interstitial)}
-                  size="large"
-                >
-                  <FavoriteIcon className={classes.cartIcon} />
+                <IconButton onClick={gotoWishListPage} size="large">
+                  <Badge
+                    badgeContent={wishlistProducts.length}
+                    color="secondary"
+                  >
+                    <FavoriteIcon className={classes.cartIcon} />
+                  </Badge>
                 </IconButton>
                 <IconButton
-                  onClick={toggleDrawer(!context.open_interstitial)}
+                  onClick={toggleDrawer(!open_interstitial)}
                   size="large"
                 >
-                  <ShoppingBasketIcon className={classes.cartIcon} />
+                  <Badge badgeContent={cart?.length} color="secondary">
+                    <ShoppingBasketIcon className={classes.cartIcon} />
+                  </Badge>
                 </IconButton>
               </div>
             </Toolbar>

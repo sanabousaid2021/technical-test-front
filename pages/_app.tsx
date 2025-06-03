@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { GlobalProvider } from "../state/global-context";
+import { GlobalProvider } from "@/state/global-context";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import theme from "../theme/theme";

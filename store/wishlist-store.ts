@@ -1,27 +1,36 @@
-import { create } from "zustand";
-import { useShallow } from "zustand/react/shallow";
+import create from "zustand";
 import { Product } from "../types/types";
 
 export interface WishlistStore {
-  products: Product[];
+  wishlistProducts: Product[];
+  isOpen: boolean;
   actions: {
-    addToWishlist: (products: Product[]) => void;
+    updateWishlist: (product: Product) => void;
+    openWishlistDrawer: () => void;
+    closeWishlistDrawer: () => void;
   };
 }
 
 export const useWishlistStore = create<WishlistStore>((set) => ({
-  products: [],
+  wishlistProducts: [],
+  isOpen: false,
   actions: {
-    addToWishlist: (products) => set(() => ({ products })),
+    openWishlistDrawer: () => set(() => ({ isOpen: true })),
+    closeWishlistDrawer: () => set(() => ({ isOpen: false })),
+    updateWishlist: (product) =>
+      set(({ wishlistProducts }) => ({
+        wishlistProducts: wishlistProducts.find(({ id }) => id === product.id)
+          ? wishlistProducts.filter(({ id }) => id !== product.id)
+          : [...wishlistProducts, product],
+      })),
   },
 }));
 
-export const useOnBoardingResourceState = () =>
-  useWishlistStore(
-    useShallow(({ products }) => ({
-      products,
-    }))
-  );
+export const useWishlistState = () =>
+  useWishlistStore(({ wishlistProducts, isOpen }) => ({
+    wishlistProducts,
+    isOpen,
+  }));
 
 export const useWishlistActions = () =>
   useWishlistStore(({ actions }) => actions);

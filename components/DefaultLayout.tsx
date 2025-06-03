@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minHeight: "100vh",
   },
+  main: {
+    minHeight: "calc(100vh - 160px)",
+  },
 }));
 type Props = {
   children: ReactNode;
@@ -21,7 +24,7 @@ const DefaultLayout = (props: Props) => {
       {/*Header*/}
       <Header />
 
-      <main>{props.children}</main>
+      <main className={classes.main}>{props.children}</main>
 
       {/*Footer*/}
       <Footer />
