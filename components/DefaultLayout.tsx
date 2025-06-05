@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: "100vh",
   },
   main: {
-    minHeight: "calc(100vh - 160px)",
+    marginBottom: theme.spacing(8),
   },
 }));
 type Props = {

@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(2),
     position: "relative",
     display: "flex",
+    width: "100%",
   },
 
   productItemImg: {
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
     gap: theme.spacing(2),
     alignItems: "flex-start",
+    width: "100%",
   },
   footer: {
     display: "flex",

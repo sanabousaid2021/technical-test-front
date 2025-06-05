@@ -21,6 +21,9 @@ const theme = createTheme({
     h2: {
       fontSize: "2.25rem",
     },
+    h3: {
+      fontSize: "1.375rem",
+    },
     body1: {
       fontSize: "1rem",
     },
@@ -28,7 +31,7 @@ const theme = createTheme({
       fontSize: "0.875rem",
     },
     button: {
-      fontSize: "0.875rem",
+      fontSize: "1.375rem",
       textTransform: "none",
     },
   },
